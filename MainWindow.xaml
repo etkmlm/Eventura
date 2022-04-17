@@ -1,0 +1,22 @@
+﻿<Window x:Class="Eventura.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Eventura"
+        mc:Ignorable="d"
+        Title="Ana Sayfa" Height="510" Width="400" WindowStyle="None">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" GlassFrameThickness="0"/>
+    </WindowChrome.WindowChrome>
+    <Grid Background="#202020">
+        <Button BorderThickness="0" Foreground="White" x:Name="btnClose" Content="X" HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent" Margin="0,10,10,0"/>
+        <Label Content="Eventura" VerticalAlignment="Top" Foreground="White" HorizontalAlignment="Left" FontSize="20" Margin="10,10,0,0"/>
+        <RichTextBox Padding="10" Foreground="White" x:Name="txtMessages" Background="#303030" BorderThickness="0" Margin="10,60,10,110"/>
+        <TextBox Padding="5" VerticalContentAlignment="Center" Foreground="White" x:Name="txtMessage" Height="30" VerticalAlignment="Bottom" Background="#282828" BorderThickness="0" Margin="10,0,10,70"/>
+        <TextBox Text="127.0.0.1:25570" Padding="5" VerticalContentAlignment="Center" Foreground="White" Height="30" x:Name="txtIP" VerticalAlignment="Bottom" Background="#282828" Margin="10,0,10,5" BorderThickness="0"/>
+        <Button x:Name="btnStart" Content="Start" Width="90" Height="25" Background="#272727" BorderThickness="0" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10,0,0,40"/>
+        <Button x:Name="btnConnect" Content="Connect" Width="90" Height="25" Background="#272727" BorderThickness="0" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,40"/>
+        <Button x:Name="btnSend" Content="Send" Width="90" Height="25" Background="#272727" BorderThickness="0" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,10,40"/>
+    </Grid>
+</Window>

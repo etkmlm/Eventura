@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CoreliumCryptionEngine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
@@ -42,7 +43,7 @@ namespace Eventura
 
             btnConnect.Click += (a, b) =>
             {
-                communicator = new Communicator(txtIP.Text, false);
+                communicator = new Communicator(txtIP.Text, false, txtPass.Text);
                 communicator.OnReceived += OnReceived;
             };
 
@@ -55,18 +56,42 @@ namespace Eventura
 
             btnStart.Click += (a, b) =>
             {
-                communicator = new Communicator(txtIP.Text, true);
+                communicator = new Communicator(txtIP.Text, true, txtPass.Text);
                 communicator.OnReceived += OnReceived;
             };
         }
 
-        private void OnReceived(string message)
+        private void OnReceived(string message, System.Net.Sockets.Socket s)
         {
-            string[] content = message.Split(new string[] { ":/:" }, StringSplitOptions.None);
-            if (content.Length == 1)
-                Add("", content[0]);
+            if (message.StartsWith("|SYS|"))
+            {
+                string m = message.Substring(5);
+                if (m.StartsWith("pass") && communicator.mode)
+                {
+                    if (communicator.pass != m.Substring(4))
+                    {
+                        communicator.SendTo("You entered a wrong password!", s, "System");
+                        communicator.sockets.Remove(s);
+                        communicator.allowed.Remove(s);
+                        communicator.Send(s.RemoteEndPoint.ToString() + " kicked: Wrong pass.", "System");
+                    }
+                    else
+                    {
+                        communicator.allowed.Add(s);
+                        communicator.Send(s.RemoteEndPoint.ToString() + " joined the chat!", "System");
+                    }
+                }
+            }
             else
-                Add(content[0], content[1]);
+            {
+                string[] content = message.Split(new string[] { ":/:" }, StringSplitOptions.None);
+                if (content[0] != "System" && !communicator.allowed.Contains(s) && communicator.mode)
+                    return;
+                if (content.Length == 1)
+                    Add("", content[0]);
+                else
+                    Add(content[0], content[1]);
+            }
         }
 
         private void Send(string text)
